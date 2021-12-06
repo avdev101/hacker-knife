@@ -7,7 +7,7 @@ services:
     volumes:
       - ./data/tarantool/app:/var/lib/tarantool
       - ./tarantool/instances:/usr/local/etc/tarantool/instances.enabled
-      - ./tarantool:/app
+      - ./tarantool/app:/app
     ports:
       - 3722
       - 8722
