@@ -1,3 +1,4 @@
+queue = require('queue')
 package.setsearchroot('/app')
 
 box.cfg{
@@ -38,6 +39,12 @@ local function schema_v1()
 
 end
 
-box.once('schema_v1', schema_v1)
 
-require('app_queue')
+local function create_tubes()
+
+    queue.create_tube('parse_subdomain', 'fifo')
+end
+
+
+box.once('schema_v1', schema_v1)
+box.once('tubes_v1', create_tubes)
