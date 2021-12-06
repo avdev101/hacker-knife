@@ -1,3 +1,5 @@
+package.setsearchroot('/app')
+
 box.cfg{
     background = false,
     listen = '0.0.0.0:3722',
@@ -37,3 +39,5 @@ local function schema_v1()
 end
 
 box.once('schema_v1', schema_v1)
+
+require('app_queue')
