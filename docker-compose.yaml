@@ -1,0 +1,15 @@
+version: '3'
+services:
+
+  tarantool_app:
+    build: tarantool
+    command: tarantoolctl start app
+    volumes:
+      - ./data/tarantool/app:/var/lib/tarantool
+      - ./tarantool/instances:/usr/local/etc/tarantool/instances.enabled
+      - ./tarantool:/app
+    ports:
+      - 3722
+      - 8722
+    environment:
+      TZ: "Europe/Moscow"
