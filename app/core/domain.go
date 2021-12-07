@@ -8,7 +8,7 @@ type Subdomain struct {
 	Domain string
 	Name   string
 	Cname  string
-	is_new bool
+	IsNew  bool
 }
 
 type DomainRepo interface {
