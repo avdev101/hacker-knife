@@ -20,6 +20,7 @@ type SubdomainRepo interface {
 	GetList(domainName string) ([]Subdomain, error)
 	Delete(names []string) error
 	CreateBatch(domains []Subdomain) error
+	UpdateBatch(domains []Subdomain) error
 }
 
 type SubdomainFinder interface {
