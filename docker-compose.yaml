@@ -13,3 +13,7 @@ services:
       - 8722
     environment:
       TZ: "Europe/Moscow"
+  app:
+    build: app
+    volumes:
+      - './app:/app'
