@@ -25,6 +25,7 @@ type FindPathTask struct {
 type MakeShotTask struct {
 	DomainName string
 	PortNumber int
+	Path       int
 	IsHttps    bool
 }
 
