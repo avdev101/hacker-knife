@@ -15,7 +15,7 @@ type GetIpTask struct {
 }
 
 type FindPortTask struct {
-	IP string
+	DomainName string
 	TaskMeta
 }
 
