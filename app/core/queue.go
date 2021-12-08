@@ -29,7 +29,11 @@ type MakeShotTask struct {
 	IsHttps    bool
 }
 
-type DomainQueue interface {
-	PutSubdomainEnumerate(d Domain) error
-	TakeSubdomainEnumerate() (Domain, error)
+type TaskQueue interface {
+	FindSubdomain(t FidnSubDomainTask) error
+	GetIp(t GetIpTask) error
+	FindPort(t FindPortTask) error
+	FindService(t FindServiceTask) error
+	FindPath(t FindPathTask) error
+	MakeShot(t MakeShotTask) error
 }
