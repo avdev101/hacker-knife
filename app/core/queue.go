@@ -22,6 +22,12 @@ type FindPathTask struct {
 	IsHttps    bool
 }
 
+type MakeShotTask struct {
+	DomainName string
+	PortNumber int
+	IsHttps    bool
+}
+
 type DomainQueue interface {
 	PutSubdomainEnumerate(d Domain) error
 	TakeSubdomainEnumerate() (Domain, error)
