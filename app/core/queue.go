@@ -1,14 +1,14 @@
 package core
 
-type ParseSubDomainTask struct {
+type FidnSubDomainTask struct {
 	DomainName string
 }
 
-type ParseIpTask struct {
+type GetIpTask struct {
 	DomainName string
 }
 
-type ParsePortTask struct {
+type FindPortTask struct {
 	IP string
 }
 
