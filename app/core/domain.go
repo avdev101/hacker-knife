@@ -23,8 +23,13 @@ type SubdomainRepo interface {
 	UpdateBatch(domains []Subdomain) error
 }
 
+type SubdomainFindItem struct {
+	Name  string
+	CName string
+}
+
 type SubdomainFinder interface {
-	Enumerate(domain string) ([]string, error)
+	Enumerate(domain string) ([]SubdomainFindItem, error)
 }
 
 // DomainCreate Service
@@ -53,7 +58,7 @@ type DomainEnumerateService struct {
 
 type domainDiff struct {
 	existing []Subdomain
-	found    []string
+	found    []SubdomainFindItem
 }
 
 func (d *domainDiff) getNew() []Subdomain {
@@ -81,17 +86,17 @@ func (s *DomainEnumerateService) Enumerate(domain Domain, stopPropagate bool) er
 		return err
 	}
 
-	found := make([]string, 1)
+	found := make([]SubdomainFindItem, 1)
 
 	for _, d := range domains {
 
 		found = append(found, d)
 
 		if !stopPropagate {
-			portTask := FindPortTask{DomainName: d}
+			portTask := FindPortTask{DomainName: d.Name}
 			s.taskQeue.FindPort(portTask)
 
-			ipTask := GetIpTask{DomainName: d}
+			ipTask := GetIpTask{DomainName: d.Name}
 			s.taskQeue.GetIp(ipTask)
 		}
 
