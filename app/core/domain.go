@@ -18,7 +18,7 @@ type DomainRepo interface {
 
 type SubdomainRepo interface {
 	GetList(domainName string) ([]Subdomain, error)
-	Delete(names []string) error
+	DeleteBatch(domains []Subdomain) error
 	CreateBatch(domains []Subdomain) error
 	UpdateBatch(domains []Subdomain) error
 }
@@ -30,12 +30,16 @@ type SubdomainFinder interface {
 // DomainCreate Service
 type DomainCreateService struct {
 	domainRepo DomainRepo
+	taskQeue   TaskQueue
 }
 
 func (s *DomainCreateService) Create(d Domain) error {
 	if err := s.domainRepo.Create(d); err != nil {
 		return err
 	}
+
+	task := FidnSubDomainTask{DomainName: d.Name}
+	s.taskQeue.FindSubdomain(task)
 
 	return nil
 }
@@ -44,24 +48,59 @@ func (s *DomainCreateService) Create(d Domain) error {
 type DomainEnumerateService struct {
 	subdomainRepo SubdomainRepo
 	finder        SubdomainFinder
+	taskQeue      TaskQueue
 }
 
-func (s *DomainEnumerateService) Enumerate(domain Domain) error {
-	// enumerate
+type domainDiff struct {
+	existing []Subdomain
+	found    []string
+}
 
-	// get existing
+func (d *domainDiff) getNew() []Subdomain {
+	return nil
+}
 
-	// get deleted
-	// remove deleted
+func (d *domainDiff) getChanged() []Subdomain {
+	return nil
+}
 
-	// get changed
-	// remove changed
+func (d *domainDiff) getDeleted() []Subdomain {
+	return nil
+}
 
-	// create new
-	// create changed
+func (s *DomainEnumerateService) Enumerate(domain Domain, stopPropagate bool) error {
 
-	// putIpEnumerate
-	// putPortEnumerate
+	existing, err := s.subdomainRepo.GetList(domain.Name)
+	if err != nil {
+		return err
+	}
+
+	domains, err := s.finder.Enumerate(domain.Name)
+
+	if err != nil {
+		return err
+	}
+
+	found := make([]string, 1)
+
+	for _, d := range domains {
+
+		found = append(found, d)
+
+		if !stopPropagate {
+			portTask := FindPortTask{DomainName: d}
+			s.taskQeue.FindPort(portTask)
+
+			ipTask := GetIpTask{DomainName: d}
+			s.taskQeue.GetIp(ipTask)
+		}
+
+	}
+
+	diff := domainDiff{existing, found}
+	s.subdomainRepo.CreateBatch(diff.getNew())
+	s.subdomainRepo.UpdateBatch(diff.getChanged())
+	s.subdomainRepo.DeleteBatch(diff.getDeleted())
 
 	return nil
 }
