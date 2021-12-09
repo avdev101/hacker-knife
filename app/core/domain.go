@@ -49,13 +49,6 @@ func (s *DomainCreateService) Create(d Domain) error {
 	return nil
 }
 
-// DomainEnumerateService
-type DomainEnumerateService struct {
-	subdomainRepo SubdomainRepo
-	finder        SubdomainFinder
-	taskQeue      TaskQueue
-}
-
 type domainDiff struct {
 	existing []Subdomain
 	found    []SubdomainFindItem
@@ -71,6 +64,13 @@ func (d *domainDiff) getChanged() []Subdomain {
 
 func (d *domainDiff) getDeleted() []Subdomain {
 	return nil
+}
+
+// DomainEnumerateService
+type DomainEnumerateService struct {
+	subdomainRepo SubdomainRepo
+	finder        SubdomainFinder
+	taskQeue      TaskQueue
 }
 
 func (s *DomainEnumerateService) Enumerate(domain Domain, stopPropagate bool) error {
