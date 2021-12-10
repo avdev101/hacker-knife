@@ -86,7 +86,7 @@ func (s *DomainEnumerateService) Enumerate(domainName string, stopPropagate bool
 		return err
 	}
 
-	found := make([]SubdomainFindItem, 1)
+	found := make([]SubdomainFindItem, 0)
 
 	for _, d := range domains {
 
