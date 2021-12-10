@@ -73,14 +73,14 @@ type DomainEnumerateService struct {
 	taskQeue      TaskQueue
 }
 
-func (s *DomainEnumerateService) Enumerate(domain Domain, stopPropagate bool) error {
+func (s *DomainEnumerateService) Enumerate(domainName string, stopPropagate bool) error {
 
-	existing, err := s.subdomainRepo.GetList(domain.Name)
+	existing, err := s.subdomainRepo.GetList(domainName)
 	if err != nil {
 		return err
 	}
 
-	domains, err := s.finder.Enumerate(domain.Name)
+	domains, err := s.finder.Enumerate(domainName)
 
 	if err != nil {
 		return err
