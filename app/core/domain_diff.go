@@ -29,10 +29,7 @@ func getFMap(found []SubdomainFindItem) map[string]SubdomainFindItem {
 }
 
 func newDomainDiff(existing []Subdomain, found []SubdomainFindItem) domainDiff {
-	eMap := getEMap(existing)
-	fMap := getFMap(found)
-
-	return domainDiff{existing, eMap, found, fMap}
+	return domainDiff{existing, getEMap(existing), found, getFMap(found)}
 
 }
 
