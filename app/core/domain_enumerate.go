@@ -11,19 +11,19 @@ type SubdomainFinder interface {
 }
 
 type DomainEnumerateService struct {
-	subdomainRepo SubdomainRepo
-	finder        SubdomainFinder
-	taskQeue      TaskQueue
+	SubdomainRepo SubdomainRepo
+	Finder        SubdomainFinder
+	TaskQeue      TaskQueue
 }
 
 func (s *DomainEnumerateService) Enumerate(domainName string, stopPropagate bool) error {
 
-	existing, err := s.subdomainRepo.GetList(domainName)
+	existing, err := s.SubdomainRepo.GetList(domainName)
 	if err != nil {
 		return err
 	}
 
-	domains, err := s.finder.Enumerate(domainName)
+	domains, err := s.Finder.Enumerate(domainName)
 
 	if err != nil {
 		return err
@@ -37,18 +37,18 @@ func (s *DomainEnumerateService) Enumerate(domainName string, stopPropagate bool
 
 		if !stopPropagate {
 			portTask := FindPortTask{DomainName: d.Name}
-			s.taskQeue.FindPort(portTask)
+			s.TaskQeue.FindPort(portTask)
 
 			ipTask := GetIpTask{DomainName: d.Name}
-			s.taskQeue.GetIp(ipTask)
+			s.TaskQeue.GetIp(ipTask)
 		}
 
 	}
 
 	diff := newDomainDiff(existing, found)
-	s.subdomainRepo.CreateBatch(diff.getNew())
-	s.subdomainRepo.UpdateBatch(diff.getChanged())
-	s.subdomainRepo.DeleteBatch(diff.getDeleted())
+	s.SubdomainRepo.CreateBatch(diff.getNew())
+	s.SubdomainRepo.UpdateBatch(diff.getChanged())
+	s.SubdomainRepo.DeleteBatch(diff.getDeleted())
 
 	return nil
 }
