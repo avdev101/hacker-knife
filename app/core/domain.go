@@ -33,12 +33,12 @@ type SubdomainFinder interface {
 }
 
 // DomainCreate Service
-type DomainCreateService struct {
+type DomainService struct {
 	domainRepo DomainRepo
 	taskQeue   TaskQueue
 }
 
-func (s *DomainCreateService) Create(d Domain) error {
+func (s *DomainService) Create(d Domain) error {
 	if err := s.domainRepo.Create(d); err != nil {
 		return err
 	}
@@ -47,6 +47,16 @@ func (s *DomainCreateService) Create(d Domain) error {
 	s.taskQeue.FindSubdomain(task)
 
 	return nil
+}
+
+func (s *DomainService) GetList() ([]Domain, error) {
+	domains, err := s.domainRepo.GetList()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return domains, nil
 }
 
 type domainDiff struct {
