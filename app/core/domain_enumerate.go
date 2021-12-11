@@ -44,7 +44,7 @@ func (s *DomainEnumerateService) Enumerate(domainName string, stopPropagate bool
 
 	}
 
-	diff := domainDiff{existing, found}
+	diff := newDomainDiff(existing, found)
 	s.subdomainRepo.CreateBatch(diff.getNew())
 	s.subdomainRepo.UpdateBatch(diff.getChanged())
 	s.subdomainRepo.DeleteBatch(diff.getDeleted())
