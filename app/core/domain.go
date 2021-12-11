@@ -59,23 +59,6 @@ func (s *DomainService) GetList() ([]Domain, error) {
 	return domains, nil
 }
 
-type domainDiff struct {
-	existing []Subdomain
-	found    []SubdomainFindItem
-}
-
-func (d *domainDiff) getNew() []Subdomain {
-	return nil
-}
-
-func (d *domainDiff) getChanged() []Subdomain {
-	return nil
-}
-
-func (d *domainDiff) getDeleted() []Subdomain {
-	return nil
-}
-
 // DomainEnumerateService
 type DomainEnumerateService struct {
 	subdomainRepo SubdomainRepo
