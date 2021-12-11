@@ -14,7 +14,7 @@ func main() {
 	q := tarantool.Queue{}
 	f := adapters.DummySubdomainFinder{}
 
-	s := core.DomainEnumerateService{r, f, q}
+	s := core.DomainEnumerateService{&r, &f, &q}
 
 	err := s.Enumerate("hackerone.com", false)
 
