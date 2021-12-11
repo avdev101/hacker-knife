@@ -1,8 +1,9 @@
 package core
 
 type SubdomainFindItem struct {
-	Name  string
-	CName string
+	Domain string
+	Name   string
+	CName  string
 }
 
 type SubdomainFinder interface {

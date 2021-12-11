@@ -34,13 +34,64 @@ func newDomainDiff(existing []Subdomain, found []SubdomainFindItem) domainDiff {
 }
 
 func (d *domainDiff) getNew() []Subdomain {
-	return nil
+	result := make([]Subdomain, 0)
+
+	for _, found := range d.found {
+
+		_, ok := d.existingMap[found.Name]
+
+		if !ok {
+			new := Subdomain{
+				Domain: found.Domain,
+				Name:   found.Name,
+				Cname:  found.CName,
+				IsNew:  true,
+			}
+			result = append(result, new)
+		}
+
+	}
+
+	return result
 }
 
 func (d *domainDiff) getChanged() []Subdomain {
-	return nil
+	result := make([]Subdomain, 0)
+
+	for _, found := range d.found {
+
+		existing, ok := d.existingMap[found.Name]
+
+		if ok {
+
+			if existing.Cname != found.CName {
+
+				changed := Subdomain{
+					Domain: found.Domain,
+					Name:   found.Name,
+					Cname:  found.CName,
+					IsNew:  true,
+				}
+
+				result = append(result, changed)
+			}
+		}
+	}
+
+	return result
 }
 
 func (d *domainDiff) getDeleted() []Subdomain {
-	return nil
+	result := make([]Subdomain, 0)
+
+	for _, existing := range d.existing {
+
+		_, ok := d.foundMap[existing.Name]
+
+		if !ok {
+			result = append(result, existing)
+		}
+	}
+
+	return result
 }
