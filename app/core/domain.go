@@ -54,5 +54,3 @@ func (s *DomainService) GetList() ([]Domain, error) {
 
 	return domains, nil
 }
-
-// DomainEnumerateService
