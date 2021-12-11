@@ -1,5 +1,10 @@
 package core
 
+type SubdomainFindItem struct {
+	Name  string
+	CName string
+}
+
 type SubdomainFinder interface {
 	Enumerate(domain string) ([]SubdomainFindItem, error)
 }

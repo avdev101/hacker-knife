@@ -23,11 +23,6 @@ type SubdomainRepo interface {
 	UpdateBatch(domains []Subdomain) error
 }
 
-type SubdomainFindItem struct {
-	Name  string
-	CName string
-}
-
 // DomainCreate Service
 type DomainService struct {
 	domainRepo DomainRepo
