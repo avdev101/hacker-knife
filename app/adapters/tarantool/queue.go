@@ -38,6 +38,34 @@ func (q *Queue) FindSubdomain(t core.FidnSubDomainTask) error {
 	return err
 }
 
+func (q *Queue) TakeSubdomain() (core.FindSubdomainConsume, error) {
+	que := queue.New(q.conn, "parse_subdomain")
+
+	var res core.FindSubdomainConsume
+
+	task, err := que.Take()
+	if err != nil {
+		return res, err
+	}
+
+	res.Ack = func() {
+		task.Ack()
+	}
+
+	res.Nack = func() {
+		task.Release()
+	}
+
+	bData := []byte(task.Data().(string))
+
+	err = json.Unmarshal(bData, &res.Data)
+	if err != nil {
+		return res, err
+	}
+
+	return res, nil
+}
+
 func (q *Queue) GetIp(t core.GetIpTask) error {
 	return nil
 }

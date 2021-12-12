@@ -9,6 +9,12 @@ type FidnSubDomainTask struct {
 	TaskMeta
 }
 
+type FindSubdomainConsume struct {
+	Ack  func()
+	Nack func()
+	Data FidnSubDomainTask
+}
+
 type GetIpTask struct {
 	DomainName string
 	TaskMeta
@@ -41,6 +47,8 @@ type MakeShotTask struct {
 
 type TaskQueue interface {
 	FindSubdomain(t FidnSubDomainTask) error
+	TakeSubdomain() (FindSubdomainConsume, error)
+
 	GetIp(t GetIpTask) error
 	FindPort(t FindPortTask) error
 	FindService(t FindServiceTask) error
