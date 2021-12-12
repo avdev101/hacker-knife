@@ -1,4 +1,4 @@
-package tarantool
+package repo
 
 import (
 	"github.com/eremeevdev/hacker-knife/core"
