@@ -6,3 +6,25 @@ type IP struct {
 	Addr         string
 	IsNew        bool
 }
+
+type IPRepo interface {
+	GetByDomain(name string) ([]IP, error)
+	GetBySubdomain(name string) ([]IP, error)
+	CreateBatch(ips []IP) error
+	DeleteBatch(ips []IP) error
+}
+
+type IPCollectItem struct {
+	Domain string
+	Addr   string
+}
+
+type IPCollector interface {
+	Collect(domain string) ([]IPCollectItem, error)
+}
+
+type IPCollectService struct{}
+
+func (s *IPCollectService) Collect() error {
+	return nil
+}
