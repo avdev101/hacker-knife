@@ -1,4 +1,4 @@
-package tarantool
+package queue
 
 import (
 	"encoding/json"

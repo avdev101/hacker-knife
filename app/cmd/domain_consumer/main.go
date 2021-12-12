@@ -5,12 +5,14 @@ import (
 	"log"
 
 	"github.com/eremeevdev/hacker-knife/adapters/collectors/domain"
+	"github.com/eremeevdev/hacker-knife/adapters/queue"
 	"github.com/eremeevdev/hacker-knife/adapters/tarantool"
+
 	"github.com/eremeevdev/hacker-knife/core"
 )
 
 func main() {
-	q, err := tarantool.NewQueue("tarantool_app:3722", "admin", "pass")
+	q, err := queue.NewQueue("tarantool_app:3722", "admin", "pass")
 	if err != nil {
 		panic(err)
 	}

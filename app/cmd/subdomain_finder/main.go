@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/eremeevdev/hacker-knife/adapters/collectors/domain"
+	"github.com/eremeevdev/hacker-knife/adapters/queue"
 	"github.com/eremeevdev/hacker-knife/adapters/tarantool"
 	"github.com/eremeevdev/hacker-knife/core"
 )
@@ -41,7 +42,7 @@ func main() {
 		panic(err)
 	}*/
 
-	q := tarantool.Queue{}
+	q := queue.Queue{}
 	f := domain.DummySubdomainCollector{}
 
 	s := core.DomainCollectService{&r, &f, &q}
