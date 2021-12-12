@@ -6,13 +6,13 @@ import (
 	"github.com/eremeevdev/hacker-knife/core"
 )
 
-type DummySubdomainFinder struct {
+type DummySubdomainCollector struct {
 }
 
-func (f *DummySubdomainFinder) Enumerate(domain string) ([]core.SubdomainFindItem, error) {
-	result := make([]core.SubdomainFindItem, 0)
-	result = append(result, core.SubdomainFindItem{domain, fmt.Sprintf("%v.%v", "x", domain), "xx1"})
-	result = append(result, core.SubdomainFindItem{domain, fmt.Sprintf("%v.%v", "y", domain), "yy1"})
+func (f *DummySubdomainCollector) Collect(domain string) ([]core.SubdomainCollectItem, error) {
+	result := make([]core.SubdomainCollectItem, 0)
+	result = append(result, core.SubdomainCollectItem{domain, fmt.Sprintf("%v.%v", "x", domain), "xx1"})
+	result = append(result, core.SubdomainCollectItem{domain, fmt.Sprintf("%v.%v", "y", domain), "yy1"})
 
 	return result, nil
 }

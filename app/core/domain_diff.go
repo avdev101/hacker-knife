@@ -4,8 +4,8 @@ type domainDiff struct {
 	existing    []Subdomain
 	existingMap map[string]Subdomain
 
-	found    []SubdomainFindItem
-	foundMap map[string]SubdomainFindItem
+	found    []SubdomainCollectItem
+	foundMap map[string]SubdomainCollectItem
 }
 
 func getEMap(existing []Subdomain) map[string]Subdomain {
@@ -18,8 +18,8 @@ func getEMap(existing []Subdomain) map[string]Subdomain {
 	return result
 }
 
-func getFMap(found []SubdomainFindItem) map[string]SubdomainFindItem {
-	result := make(map[string]SubdomainFindItem)
+func getFMap(found []SubdomainCollectItem) map[string]SubdomainCollectItem {
+	result := make(map[string]SubdomainCollectItem)
 
 	for _, d := range found {
 		result[d.Name] = d
@@ -28,7 +28,7 @@ func getFMap(found []SubdomainFindItem) map[string]SubdomainFindItem {
 	return result
 }
 
-func newDomainDiff(existing []Subdomain, found []SubdomainFindItem) domainDiff {
+func newDomainDiff(existing []Subdomain, found []SubdomainCollectItem) domainDiff {
 	return domainDiff{existing, getEMap(existing), found, getFMap(found)}
 
 }

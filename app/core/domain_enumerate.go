@@ -1,46 +1,46 @@
 package core
 
-type SubdomainFindItem struct {
+type SubdomainCollectItem struct {
 	Domain string
 	Name   string
 	CName  string
 }
 
-type SubdomainFinder interface {
-	Enumerate(domain string) ([]SubdomainFindItem, error)
+type SubdomainCollector interface {
+	Collect(domain string) ([]SubdomainCollectItem, error)
 }
 
-type DomainEnumerateService struct {
+type DomainCollectService struct {
 	SubdomainRepo SubdomainRepo
-	Finder        SubdomainFinder
+	Finder        SubdomainCollector
 	TaskQeue      TaskQueue
 }
 
-func (s *DomainEnumerateService) Enumerate(domainName string, stopPropagate bool) error {
+func (s *DomainCollectService) Collect(domainName string, stopPropagate bool) error {
 
 	existing, err := s.SubdomainRepo.GetList(domainName)
 	if err != nil {
 		return err
 	}
 
-	domains, err := s.Finder.Enumerate(domainName)
+	domains, err := s.Finder.Collect(domainName)
 
 	if err != nil {
 		return err
 	}
 
-	found := make([]SubdomainFindItem, 0)
+	found := make([]SubdomainCollectItem, 0)
 
 	for _, d := range domains {
 
 		found = append(found, d)
 
 		if !stopPropagate {
-			portTask := FindPortTask{DomainName: d.Name}
-			s.TaskQeue.FindPort(portTask)
+			portTask := CollectPortCommand{DomainName: d.Name}
+			s.TaskQeue.CollectPort(portTask)
 
-			ipTask := GetIpTask{DomainName: d.Name}
-			s.TaskQeue.GetIp(ipTask)
+			ipTask := CollectIPCommand{DomainName: d.Name}
+			s.TaskQeue.CollectIP(ipTask)
 		}
 
 	}

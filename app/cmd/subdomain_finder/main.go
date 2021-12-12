@@ -42,11 +42,11 @@ func main() {
 	}*/
 
 	q := tarantool.Queue{}
-	f := adapters.DummySubdomainFinder{}
+	f := adapters.DummySubdomainCollector{}
 
-	s := core.DomainEnumerateService{&r, &f, &q}
+	s := core.DomainCollectService{&r, &f, &q}
 
-	err = s.Enumerate("hackerone.com", false)
+	err = s.Collect("hackerone.com", false)
 
 	if err != nil {
 		panic(err)

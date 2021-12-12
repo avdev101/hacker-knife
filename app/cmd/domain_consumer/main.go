@@ -20,19 +20,19 @@ func main() {
 		panic(err)
 	}
 
-	f := adapters.DummySubdomainFinder{}
+	f := adapters.DummySubdomainCollector{}
 
-	s := core.DomainEnumerateService{&r, &f, &q}
+	s := core.DomainCollectService{&r, &f, &q}
 
 	for {
-		task, err := q.TakeSubdomain()
+		task, err := q.TakeCollectSubdomain()
 		if err != nil {
 			panic(err)
 		}
 
 		fmt.Println(task)
 
-		err = s.Enumerate(task.Data.DomainName, task.Data.Propagate)
+		err = s.Collect(task.Data.DomainName, task.Data.Propagate)
 		if err != nil {
 			log.Fatal(err)
 			task.Nack()

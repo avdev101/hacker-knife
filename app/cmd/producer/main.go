@@ -11,9 +11,9 @@ func main() {
 		panic(err)
 	}
 
-	t := core.FidnSubDomainTask{DomainName: "hackerone.com"}
+	t := core.CollectSubDomainCommand{DomainName: "hackerone.com"}
 
-	err = q.FindSubdomain(t)
+	err = q.CollectSubdomain(t)
 	if err != nil {
 		panic(err)
 	}

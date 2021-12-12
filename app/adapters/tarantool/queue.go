@@ -26,7 +26,7 @@ func NewQueue(host string, user string, pass string) (Queue, error) {
 	return Queue{conn}, nil
 }
 
-func (q *Queue) FindSubdomain(t core.FidnSubDomainTask) error {
+func (q *Queue) CollectSubdomain(t core.CollectSubDomainCommand) error {
 
 	data, err := json.Marshal(t)
 	if err != nil {
@@ -38,10 +38,10 @@ func (q *Queue) FindSubdomain(t core.FidnSubDomainTask) error {
 	return err
 }
 
-func (q *Queue) TakeSubdomain() (core.FindSubdomainTake, error) {
+func (q *Queue) TakeCollectSubdomain() (core.CollectSubdomainTask, error) {
 	que := queue.New(q.conn, "parse_subdomain")
 
-	var res core.FindSubdomainTake
+	var res core.CollectSubdomainTask
 
 	task, err := que.Take()
 	if err != nil {
@@ -66,22 +66,22 @@ func (q *Queue) TakeSubdomain() (core.FindSubdomainTake, error) {
 	return res, nil
 }
 
-func (q *Queue) GetIp(t core.GetIpTask) error {
+func (q *Queue) CollectIP(t core.CollectIPCommand) error {
 	return nil
 }
 
-func (q *Queue) FindPort(t core.FindPortTask) error {
+func (q *Queue) CollectPort(t core.CollectPortCommand) error {
 	return nil
 }
 
-func (q *Queue) FindService(t core.FindServiceTask) error {
+func (q *Queue) CollectService(t core.CollectServiceCommand) error {
 	return nil
 }
 
-func (q *Queue) FindPath(t core.FindPathTask) error {
+func (q *Queue) CollectPath(t core.CollectPathCommand) error {
 	return nil
 }
 
-func (q *Queue) MakeShot(t core.MakeShotTask) error {
+func (q *Queue) CollectShot(t core.CollectShotCommand) error {
 	return nil
 }

@@ -34,8 +34,8 @@ func (s *DomainService) Create(d Domain) error {
 		return err
 	}
 
-	task := FidnSubDomainTask{DomainName: d.Name}
-	s.taskQeue.FindSubdomain(task)
+	task := CollectSubDomainCommand{DomainName: d.Name}
+	s.taskQeue.CollectSubdomain(task)
 
 	return nil
 }

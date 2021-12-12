@@ -4,40 +4,40 @@ type TaskMeta struct {
 	Propagate bool
 }
 
-type FidnSubDomainTask struct {
+type CollectSubDomainCommand struct {
 	DomainName string
 	TaskMeta
 }
 
-type FindSubdomainTake struct {
+type CollectSubdomainTask struct {
 	Ack  func()
 	Nack func()
-	Data FidnSubDomainTask
+	Data CollectSubDomainCommand
 }
 
-type GetIpTask struct {
+type CollectIPCommand struct {
 	DomainName string
 	TaskMeta
 }
 
-type FindPortTask struct {
+type CollectPortCommand struct {
 	DomainName string
 	TaskMeta
 }
 
-type FindServiceTask struct {
+type CollectServiceCommand struct {
 	IP string
 	TaskMeta
 }
 
-type FindPathTask struct {
+type CollectPathCommand struct {
 	DomainName string
 	PortNumber int
 	IsHttps    bool
 	TaskMeta
 }
 
-type MakeShotTask struct {
+type CollectShotCommand struct {
 	DomainName string
 	PortNumber int
 	Path       int
@@ -46,12 +46,12 @@ type MakeShotTask struct {
 }
 
 type TaskQueue interface {
-	FindSubdomain(t FidnSubDomainTask) error
-	TakeSubdomain() (FindSubdomainTake, error)
+	CollectSubdomain(t CollectSubDomainCommand) error
+	TakeCollectSubdomain() (CollectSubdomainTask, error)
 
-	GetIp(t GetIpTask) error
-	FindPort(t FindPortTask) error
-	FindService(t FindServiceTask) error
-	FindPath(t FindPathTask) error
-	MakeShot(t MakeShotTask) error
+	CollectIP(t CollectIPCommand) error
+	CollectPort(t CollectPortCommand) error
+	CollectService(t CollectServiceCommand) error
+	CollectPath(t CollectPathCommand) error
+	CollectShot(t CollectShotCommand) error
 }
