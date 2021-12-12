@@ -38,10 +38,10 @@ func (q *Queue) FindSubdomain(t core.FidnSubDomainTask) error {
 	return err
 }
 
-func (q *Queue) TakeSubdomain() (core.FindSubdomainConsume, error) {
+func (q *Queue) TakeSubdomain() (core.FindSubdomainTake, error) {
 	que := queue.New(q.conn, "parse_subdomain")
 
-	var res core.FindSubdomainConsume
+	var res core.FindSubdomainTake
 
 	task, err := que.Take()
 	if err != nil {
