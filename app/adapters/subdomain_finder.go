@@ -1,14 +1,18 @@
 package adapters
 
-import "github.com/eremeevdev/hacker-knife/core"
+import (
+	"fmt"
+
+	"github.com/eremeevdev/hacker-knife/core"
+)
 
 type DummySubdomainFinder struct {
 }
 
 func (f *DummySubdomainFinder) Enumerate(domain string) ([]core.SubdomainFindItem, error) {
 	result := make([]core.SubdomainFindItem, 0)
-	result = append(result, core.SubdomainFindItem{"ya.ru", "x.ya.ru", "xx"})
-	result = append(result, core.SubdomainFindItem{"ya.ru", "y.ya.ru", "yy"})
+	result = append(result, core.SubdomainFindItem{domain, fmt.Sprintf("%v.%v", "x", domain), "xx"})
+	result = append(result, core.SubdomainFindItem{domain, fmt.Sprintf("%v.%v", "y", domain), "yy"})
 
 	return result, nil
 }
