@@ -20,6 +20,12 @@ type CollectIPCommand struct {
 	TaskMeta
 }
 
+type CollectIPTask struct {
+	Ack  func()
+	Nack func()
+	Data CollectIPCommand
+}
+
 type CollectPortCommand struct {
 	DomainName string
 	TaskMeta
@@ -50,6 +56,8 @@ type TaskQueue interface {
 	TakeCollectSubdomain() (CollectSubdomainTask, error)
 
 	CollectIP(t CollectIPCommand) error
+	TakeCollectIP() (CollectIPTask, error)
+
 	CollectPort(t CollectPortCommand) error
 	CollectService(t CollectServiceCommand) error
 	CollectPath(t CollectPathCommand) error

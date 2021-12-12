@@ -85,3 +85,7 @@ func (q *Queue) CollectPath(t core.CollectPathCommand) error {
 func (q *Queue) CollectShot(t core.CollectShotCommand) error {
 	return nil
 }
+
+func (q *Queue) TakeCollectIP() (core.CollectIPTask, error) {
+	return core.CollectIPTask{}, nil
+}
