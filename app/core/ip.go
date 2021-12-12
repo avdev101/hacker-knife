@@ -22,14 +22,3 @@ type IPCollectItem struct {
 type IPCollector interface {
 	Collect(domain string) ([]IPCollectItem, error)
 }
-
-type IPCollectService struct {
-	IPRepo      IPRepo
-	DomainRepo  DomainRepo
-	TaskQeue    TaskQueue
-	IPCollector IPCollector
-}
-
-func (s *IPCollectService) Collect(domain string) error {
-	return nil
-}
