@@ -48,3 +48,16 @@ box.schema.user.passwd('pass')
 
 box.once('schema_v1', schema_v1)
 box.once('tubes_v1', create_tubes)
+
+
+function batch_subdomain_delete(names)
+    for _, name in ipairs(names) do
+        box.space.subdomain:delete({name})
+     end
+end
+
+function batch_subdomain_create(domains)
+    for _, subdomain in ipairs(domains) do
+        box.space.subdomain:insert(subdomain)
+    end
+end
