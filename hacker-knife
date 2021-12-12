@@ -110,3 +110,14 @@ service:
     существующие
     новые
     diff
+
+
+
+# todo:
+- log
+- structure
+- field names
+- ips
+- ports
+- services
+- paths
