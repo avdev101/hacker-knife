@@ -10,13 +10,24 @@ import (
 
 func main() {
 	fmt.Println("Start...")
-	r := tarantool.SubdomainRepo{}
+
+	r, err := tarantool.NewSubdomainRepo("tarantool_app:3722", "admin", "pass")
+	if err != nil {
+		panic(err)
+	}
+
+	items, err := r.GetList("hackerone.com")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(items)
+
 	q := tarantool.Queue{}
 	f := adapters.DummySubdomainFinder{}
 
 	s := core.DomainEnumerateService{&r, &f, &q}
 
-	err := s.Enumerate("hackerone.com", false)
+	err = s.Enumerate("hackerone.com", false)
 
 	if err != nil {
 		panic(err)
