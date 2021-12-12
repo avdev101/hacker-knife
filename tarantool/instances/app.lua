@@ -41,7 +41,6 @@ end
 
 
 local function create_tubes()
-
     queue.create_tube('parse_subdomain', 'fifo')
 end
 
