@@ -1,12 +1,34 @@
 package tarantool
 
-import "github.com/eremeevdev/hacker-knife/core"
+import (
+	"fmt"
+
+	"github.com/eremeevdev/hacker-knife/core"
+	"github.com/tarantool/go-tarantool"
+	"github.com/tarantool/go-tarantool/queue"
+)
 
 type Queue struct {
+	conn *tarantool.Connection
+}
+
+func NewQueue(host string, user string, pass string) (Queue, error) {
+	conn, err := tarantool.Connect(host, tarantool.Opts{
+		User: user,
+		Pass: pass,
+	})
+
+	if err != nil {
+		return Queue{}, fmt.Errorf("can't create connection: %v", err)
+	}
+
+	return Queue{conn}, nil
 }
 
 func (q *Queue) FindSubdomain(t core.FidnSubDomainTask) error {
-	return nil
+	que := queue.New(q.conn, "parse_subdomain")
+	_, err := que.Put(t)
+	return err
 }
 
 func (q *Queue) GetIp(t core.GetIpTask) error {
