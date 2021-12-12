@@ -2,7 +2,7 @@ package core
 
 type IP struct {
 	ParentDomain string
-	Subdomain    string
+	Domain       string
 	Addr         string
 	IsNew        bool
 }

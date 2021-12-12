@@ -2,8 +2,8 @@ package core
 
 type Port struct {
 	ParentDomain string
-	Subdomain    string
+	Domain       string
 	Number       int
-	IsHttps      bool
+	IsHTTPS      bool
 	IsNew        bool
 }

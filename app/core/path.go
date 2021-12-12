@@ -2,7 +2,7 @@ package core
 
 type Path struct {
 	ParentDomain string
-	Subdomain    string
+	Domain       string
 	PortNumber   int
 	IsHTTPS      bool
 	Path         string

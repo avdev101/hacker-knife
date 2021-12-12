@@ -2,9 +2,9 @@ package core
 
 type Service struct {
 	ParentDomain string
-	Subdomain    string
-	IP           string
-	Port         int
+	Domain       string
+	IPAddr       string
+	PortNumber   int
 	ServiceType  string
 	IsNew        bool
 }
