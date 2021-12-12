@@ -1,4 +1,4 @@
-package adapters
+package domain
 
 import (
 	"fmt"
