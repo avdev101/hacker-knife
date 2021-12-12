@@ -17,3 +17,19 @@ func tuplesToSubdomains(tuples [][]interface{}) []core.Subdomain {
 
 	return result
 }
+
+func subdomainToTuples(domains []core.Subdomain) []interface{} {
+	result := make([]interface{}, len(domains))
+
+	for i, d := range domains {
+		item := []interface{}{
+			d.Domain,
+			d.Name,
+			d.Cname,
+			d.IsNew,
+		}
+		result[i] = item
+	}
+
+	return result
+}

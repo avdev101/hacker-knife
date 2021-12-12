@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 
-	"github.com/eremeevdev/hacker-knife/adapters"
 	"github.com/eremeevdev/hacker-knife/adapters/tarantool"
 	"github.com/eremeevdev/hacker-knife/core"
 )
@@ -16,13 +15,31 @@ func main() {
 		panic(err)
 	}
 
+	xDomains := []core.Subdomain{
+		{Domain: "hackerone.com", Name: "api.hackerone.com"},
+	}
+
+	err = r.CreateBatch(xDomains)
+	if err != nil {
+		panic(err)
+	}
+
 	items, err := r.GetList("hackerone.com")
 	if err != nil {
 		panic(err)
 	}
 	fmt.Println(items)
 
-	q := tarantool.Queue{}
+	/*domains := []core.Subdomain{
+		{Name: "api.hackerone.com"},
+	}
+
+	err = r.DeleteBatch(domains)
+	if err != nil {
+		panic(err)
+	}*/
+
+	/*q := tarantool.Queue{}
 	f := adapters.DummySubdomainFinder{}
 
 	s := core.DomainEnumerateService{&r, &f, &q}
@@ -33,5 +50,5 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Println(r)
+	fmt.Println(r)*/
 }

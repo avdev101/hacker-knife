@@ -39,11 +39,25 @@ func (r *SubdomainRepo) GetList(domainName string) ([]core.Subdomain, error) {
 }
 
 func (r *SubdomainRepo) DeleteBatch(domains []core.Subdomain) error {
-	return nil
+	names := make([]string, len(domains))
+
+	for i, d := range domains {
+		names[i] = d.Name
+	}
+
+	_, err := r.conn.Call("batch_subdomain_delete", []interface{}{names})
+
+	return err
+
 }
 
 func (r *SubdomainRepo) CreateBatch(domains []core.Subdomain) error {
-	return nil
+	tuples := subdomainToTuples(domains)
+
+	_, err := r.conn.Call("batch_subdomain_create", []interface{}{tuples})
+
+	return err
+
 }
 
 func (r *SubdomainRepo) UpdateBatch(domains []core.Subdomain) error {
