@@ -1,6 +1,7 @@
 package tarantool
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/eremeevdev/hacker-knife/core"
@@ -26,8 +27,14 @@ func NewQueue(host string, user string, pass string) (Queue, error) {
 }
 
 func (q *Queue) FindSubdomain(t core.FidnSubDomainTask) error {
+
+	data, err := json.Marshal(t)
+	if err != nil {
+		return err
+	}
+
 	que := queue.New(q.conn, "parse_subdomain")
-	_, err := que.Put(t)
+	_, err = que.Put(data)
 	return err
 }
 
