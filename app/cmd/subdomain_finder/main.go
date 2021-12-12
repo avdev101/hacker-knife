@@ -16,10 +16,10 @@ func main() {
 	}
 
 	xDomains := []core.Subdomain{
-		{Domain: "hackerone.com", Name: "api.hackerone.com"},
+		{Domain: "hackerone.com", Name: "api.hackerone.com", IsNew: true},
 	}
 
-	err = r.CreateBatch(xDomains)
+	err = r.UpdateBatch(xDomains)
 	if err != nil {
 		panic(err)
 	}

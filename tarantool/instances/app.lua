@@ -61,3 +61,9 @@ function batch_subdomain_create(domains)
         box.space.subdomain:insert(subdomain)
     end
 end
+
+function batch_subdomain_replace(domains)
+    for _, subdomain in ipairs(domains) do
+        box.space.subdomain:replace(subdomain)
+    end
+end

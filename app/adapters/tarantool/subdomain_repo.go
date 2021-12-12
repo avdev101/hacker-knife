@@ -61,5 +61,10 @@ func (r *SubdomainRepo) CreateBatch(domains []core.Subdomain) error {
 }
 
 func (r *SubdomainRepo) UpdateBatch(domains []core.Subdomain) error {
-	return nil
+	tuples := subdomainToTuples(domains)
+
+	_, err := r.conn.Call("batch_subdomain_replace", []interface{}{tuples})
+
+	return err
+
 }
