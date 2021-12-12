@@ -11,8 +11,8 @@ type DummySubdomainFinder struct {
 
 func (f *DummySubdomainFinder) Enumerate(domain string) ([]core.SubdomainFindItem, error) {
 	result := make([]core.SubdomainFindItem, 0)
-	result = append(result, core.SubdomainFindItem{domain, fmt.Sprintf("%v.%v", "x", domain), "xx"})
-	result = append(result, core.SubdomainFindItem{domain, fmt.Sprintf("%v.%v", "y", domain), "yy"})
+	result = append(result, core.SubdomainFindItem{domain, fmt.Sprintf("%v.%v", "x", domain), "xx1"})
+	result = append(result, core.SubdomainFindItem{domain, fmt.Sprintf("%v.%v", "y", domain), "yy1"})
 
 	return result, nil
 }
