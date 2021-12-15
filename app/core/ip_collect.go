@@ -3,7 +3,7 @@ package core
 type IPCollectService struct {
 	IPRepo      IPRepo
 	DomainRepo  DomainRepo
-	TaskQeue    TaskQueue
+	TaskQueue   TaskQueue
 	IPCollector IPCollector
 }
 
@@ -45,7 +45,7 @@ func (s *IPCollectService) propagateTask(collected []IPCollectItem) error {
 
 	for _, ip := range collected {
 		t := CollectServiceCommand{IP: ip.Addr}
-		s.TaskQeue.CollectService(t)
+		s.TaskQueue.CollectService(t)
 
 	}
 
