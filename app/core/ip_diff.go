@@ -15,24 +15,16 @@ func (d *IPDiff) getExistingMap() map[string]IP {
 	return result
 }
 
-func (d *IPDiff) makeNewIP(foundIP IPCollectItem) IP {
-	return IP{
-		Domain: foundIP.Domain,
-		Addr:   foundIP.Addr,
-		IsNew:  true,
-	}
-}
-
-func (d *IPDiff) getNew() []IP {
+func (d *IPDiff) getNew() []IPCollectItem {
 	existingMap := d.getExistingMap()
 
-	result := make([]IP, 0)
+	result := make([]IPCollectItem, 0)
 
 	for _, foundIP := range d.found {
 		_, ok := existingMap[foundIP.Addr]
 
 		if !ok {
-			result = append(result, d.makeNewIP(foundIP))
+			result = append(result, foundIP)
 		}
 	}
 

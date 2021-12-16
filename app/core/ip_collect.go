@@ -31,11 +31,27 @@ func (s *IPCollectService) Collect(domain string, stopPropagate bool) error {
 	return nil
 }
 
+func (s *IPCollectService) createNewIPList(collectedIPs []IPCollectItem) []IP {
+	result := make([]IP, len(collectedIPs))
+
+	for i, found := range collectedIPs {
+		ip := IP{
+			ParentDomain: "",
+			Domain:       "",
+			Addr:         found.Addr,
+		}
+		result[i] = ip
+	}
+
+	return result
+}
+
 func (s *IPCollectService) saveDiff(existing []IP, collected []IPCollectItem) error {
 
 	diff := IPDiff{existing, collected}
 
-	s.IPRepo.CreateBatch(diff.getNew())
+	newIPList := s.createNewIPList(diff.getNew())
+	s.IPRepo.CreateBatch(newIPList)
 	s.IPRepo.DeleteBatch(diff.getDeleted())
 
 	return nil
