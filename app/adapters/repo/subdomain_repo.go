@@ -37,7 +37,7 @@ func NewSubdomainRepo(host string, user string, pass string) (SubdomainRepo, err
 	return SubdomainRepo{conn}, nil
 }
 
-func (r *SubdomainRepo) GetList(domainName string) ([]core.Subdomain, error) {
+func (r *SubdomainRepo) GetListByParent(domainName string) ([]core.Subdomain, error) {
 
 	resp, err := r.conn.Select("subdomain", "domain", 0, 10000, tarantool.IterEq, []interface{}{domainName})
 	if err != nil {

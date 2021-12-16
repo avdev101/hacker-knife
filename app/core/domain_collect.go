@@ -18,7 +18,7 @@ type DomainCollectService struct {
 
 func (s *DomainCollectService) Collect(domainName string, stopPropagate bool) error {
 
-	existing, err := s.SubdomainRepo.GetList(domainName)
+	existing, err := s.SubdomainRepo.GetListByParent(domainName)
 	if err != nil {
 		return err
 	}

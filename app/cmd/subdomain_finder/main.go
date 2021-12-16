@@ -27,7 +27,7 @@ func main() {
 		panic(err)
 	}
 
-	items, err := r.GetList("hackerone.com")
+	items, err := r.GetListByParent("hackerone.com")
 	if err != nil {
 		panic(err)
 	}

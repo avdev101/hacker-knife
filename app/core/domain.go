@@ -18,7 +18,7 @@ type DomainRepo interface {
 
 type SubdomainRepo interface {
 	Get(name string) (Subdomain, error)
-	GetList(domainName string) ([]Subdomain, error)
+	GetListByParent(domainName string) ([]Subdomain, error)
 	DeleteBatch(domains []Subdomain) error
 	CreateBatch(domains []Subdomain) error
 	UpdateBatch(domains []Subdomain) error
