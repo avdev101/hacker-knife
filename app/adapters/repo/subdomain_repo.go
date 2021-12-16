@@ -11,6 +11,11 @@ type SubdomainRepo struct {
 	conn *tarantool.Connection
 }
 
+func (r *SubdomainRepo) Get(name string) (core.Subdomain, error) {
+	//TODO implement me
+	panic("implement me")
+}
+
 func NewSubdomainRepo(host string, user string, pass string) (SubdomainRepo, error) {
 	conn, err := tarantool.Connect(host, tarantool.Opts{
 		User: user,
