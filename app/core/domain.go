@@ -5,10 +5,10 @@ type Domain struct {
 }
 
 type Subdomain struct {
-	Domain string
-	Name   string
-	Cname  string
-	IsNew  bool
+	ParentName string
+	Name       string
+	Cname      string
+	IsNew      bool
 }
 
 type DomainRepo interface {
@@ -17,6 +17,7 @@ type DomainRepo interface {
 }
 
 type SubdomainRepo interface {
+	Get(name string) (Subdomain, error)
 	GetList(domainName string) ([]Subdomain, error)
 	DeleteBatch(domains []Subdomain) error
 	CreateBatch(domains []Subdomain) error

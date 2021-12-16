@@ -7,10 +7,10 @@ func tuplesToSubdomains(tuples [][]interface{}) []core.Subdomain {
 
 	for _, tuple := range tuples {
 		item := core.Subdomain{
-			Domain: tuple[0].(string),
-			Name:   tuple[1].(string),
-			Cname:  tuple[2].(string),
-			IsNew:  tuple[3].(bool),
+			ParentName: tuple[0].(string),
+			Name:       tuple[1].(string),
+			Cname:      tuple[2].(string),
+			IsNew:      tuple[3].(bool),
 		}
 		result = append(result, item)
 	}
@@ -23,7 +23,7 @@ func subdomainToTuples(domains []core.Subdomain) []interface{} {
 
 	for i, d := range domains {
 		item := []interface{}{
-			d.Domain,
+			d.ParentName,
 			d.Name,
 			d.Cname,
 			d.IsNew,

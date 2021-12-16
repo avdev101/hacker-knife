@@ -42,10 +42,10 @@ func (d *domainDiff) getNew() []Subdomain {
 
 		if !ok {
 			new := Subdomain{
-				Domain: found.Domain,
-				Name:   found.Name,
-				Cname:  found.CName,
-				IsNew:  true,
+				ParentName: found.Domain,
+				Name:       found.Name,
+				Cname:      found.CName,
+				IsNew:      true,
 			}
 			result = append(result, new)
 		}
@@ -67,10 +67,10 @@ func (d *domainDiff) getChanged() []Subdomain {
 			if existing.Cname != found.CName {
 
 				changed := Subdomain{
-					Domain: found.Domain,
-					Name:   found.Name,
-					Cname:  found.CName,
-					IsNew:  true,
+					ParentName: found.Domain,
+					Name:       found.Name,
+					Cname:      found.CName,
+					IsNew:      true,
 				}
 
 				result = append(result, changed)

@@ -19,7 +19,7 @@ func main() {
 	}
 
 	/*xDomains := []core.Subdomain{
-		{Domain: "hackerone.com", Name: "api.hackerone.com", IsNew: true},
+		{ParentName: "hackerone.com", Name: "api.hackerone.com", IsNew: true},
 	}
 
 	err = r.UpdateBatch(xDomains)

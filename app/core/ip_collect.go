@@ -1,13 +1,19 @@
 package core
 
 type IPCollectService struct {
-	IPRepo      IPRepo
-	DomainRepo  DomainRepo
-	TaskQueue   TaskQueue
-	IPCollector IPCollector
+	IPRepo        IPRepo
+	DomainRepo    DomainRepo
+	SubdomainRepo SubdomainRepo
+	TaskQueue     TaskQueue
+	IPCollector   IPCollector
 }
 
 func (s *IPCollectService) Collect(domain string, stopPropagate bool) error {
+
+	d, err := s.SubdomainRepo.Get(domain)
+	if err != nil {
+		return err
+	}
 
 	existing, err := s.IPRepo.GetBySubdomain(domain)
 	if err != nil {
@@ -19,7 +25,7 @@ func (s *IPCollectService) Collect(domain string, stopPropagate bool) error {
 		return err
 	}
 
-	err = s.saveDiff(existing, collected)
+	err = s.saveDiff(d, existing, collected)
 	if err != nil {
 		return err
 	}
@@ -31,13 +37,13 @@ func (s *IPCollectService) Collect(domain string, stopPropagate bool) error {
 	return nil
 }
 
-func (s *IPCollectService) createNewIPList(collectedIPs []IPCollectItem) []IP {
+func (s *IPCollectService) createNewIPList(d Subdomain, collectedIPs []IPCollectItem) []IP {
 	result := make([]IP, len(collectedIPs))
 
 	for i, found := range collectedIPs {
 		ip := IP{
-			ParentDomain: "",
-			Domain:       "",
+			ParentDomain: d.ParentName,
+			Domain:       d.Name,
 			Addr:         found.Addr,
 		}
 		result[i] = ip
@@ -46,11 +52,11 @@ func (s *IPCollectService) createNewIPList(collectedIPs []IPCollectItem) []IP {
 	return result
 }
 
-func (s *IPCollectService) saveDiff(existing []IP, collected []IPCollectItem) error {
+func (s *IPCollectService) saveDiff(d Subdomain, existing []IP, collected []IPCollectItem) error {
 
 	diff := IPDiff{existing, collected}
 
-	newIPList := s.createNewIPList(diff.getNew())
+	newIPList := s.createNewIPList(d, diff.getNew())
 	s.IPRepo.CreateBatch(newIPList)
 	s.IPRepo.DeleteBatch(diff.getDeleted())
 
