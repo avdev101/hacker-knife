@@ -12,8 +12,16 @@ type SubdomainRepo struct {
 }
 
 func (r *SubdomainRepo) Get(name string) (core.Subdomain, error) {
-	//TODO implement me
-	panic("implement me")
+	resp, err := r.conn.Select("subdomain", "primary", 0, 1, tarantool.IterEq, []interface{}{name})
+	if err != nil {
+		return core.Subdomain{}, err
+	}
+
+	tuples := resp.Tuples()
+
+	subdomains := tuplesToSubdomains(tuples)
+
+	return subdomains[0], nil
 }
 
 func NewSubdomainRepo(host string, user string, pass string) (SubdomainRepo, error) {
