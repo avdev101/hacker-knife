@@ -9,6 +9,7 @@ type Service struct {
 }
 
 type ServiceRepo interface {
+	GetListByDomain(name string) ([]Service, error)
 	GetListByIP(addr string) ([]Service, error)
 	CreateBatch([]Service) error
 	DeleteBatch([]Service) error
