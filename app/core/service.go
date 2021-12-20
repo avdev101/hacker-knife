@@ -21,5 +21,5 @@ type ServiceCollectItem struct {
 }
 
 type ServiceCollector interface {
-	Collect(addr string) ([]Service, error)
+	Collect(addr string) ([]ServiceCollectItem, error)
 }
