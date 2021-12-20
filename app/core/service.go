@@ -17,6 +17,7 @@ type ServiceRepo interface {
 type ServiceCollectItem struct {
 	IPAddr      string
 	ServiceType string
+	PortNumber  string
 }
 
 type ServiceCollector interface {
