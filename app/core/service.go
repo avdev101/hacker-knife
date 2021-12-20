@@ -1,15 +1,16 @@
 package core
 
 type Service struct {
-	Domain      string
-	IPAddr      string
-	PortNumber  int
-	ServiceType string
-	IsNew       bool
+	ParentDomain string
+	Domain       string
+	IPAddr       string
+	PortNumber   int
+	ServiceType  string
+	IsNew        bool
 }
 
 type ServiceRepo interface {
-	GetListByDomain(name string) ([]Service, error)
+	GetListByParentDomain(name string) ([]Service, error)
 	GetListByIP(addr string) ([]Service, error)
 	CreateBatch([]Service) error
 	DeleteBatch([]Service) error
